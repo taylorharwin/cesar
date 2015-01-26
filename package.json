@@ -1,0 +1,31 @@
+{
+  "name": "cesar",
+  "version": "0.0.0",
+  "description": " a very rudimentary Twitter bot",
+  "main": "server.js",
+  "dependencies": {
+    "mysql": "~2.5.4",
+    "twat": "~0.8.5",
+    "twit": "~1.1.19",
+    "twitter": "~1.0.3",
+    "underscore": "~1.7.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "npm test",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/taylorharwin/cesar.git"
+  },
+  "keywords": [
+    "twitter"
+  ],
+  "author": "taylor.harwin@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/taylorharwin/cesar/issues"
+  },
+  "homepage": "https://github.com/taylorharwin/cesar"
+}
