@@ -1,14 +1,7 @@
 var T = require('twit');
 var _ = require('underscore');
-var mysql = require('mysql');
-
-var connection = mysql.createConnection({
-  host:'localhost',
-  user:'me',
-  password:'stenborg'
-});
-
-connection.connect();
+var mongodb = require('mongodb');
+var uri = 'mongodb://heroku_app33504368:oa3i5pb84k3sgc94c4o2h5e82e@ds051640.mongolab.com:51640/heroku_app33504368';
 
 var myClient = new T({
   consumer_key:'hAOjwjemkcUDmBBbBNJVTxAzP',
@@ -29,14 +22,34 @@ function postTweet(newTweet, oldTweet){
     });
   }
 }
+
+var db = mongodb.MongoClient.connect(uri, function(err, db) {
+  if(err){
+    throw err;
+  }
+  else {
+    console.log('connected to mongo');
+    var tweets = db.collection('tweets');
+  }
+
 function getTweets(){
-  myClient.get('statuses/user_timeline', { screen_name: 'cesarmillan', count: 2}, function (err, data, response) {
+  myClient.get('statuses/user_timeline', { screen_name: 'cesarmillan', count: 5}, function (err, data, response) {
+
     _.each(data, function(tweet){
       if (tweet.text.indexOf('dog') > -1){
-        var newTweet = transformTweet(tweet.text);
-        postTweet(newTweet, currentTweet);
-        currentTweet = newTweet;
-        allTweets.push(newTweet);
+        var newTweet = {
+          text: transformTweet(tweet.text),
+          created_at: tweet.created_at
+        };
+        if (newTweet.text !== currentTweet){
+          postTweet(newTweet.text, currentTweet);
+          currentTweet = newTweet.text;
+          tweets.insert(newTweet, function(err, result){
+            if (err){throw err} else{
+              console.log('new tweet added to db');
+            }
+          });
+        }
       }
     });
   });
@@ -45,7 +58,9 @@ function getTweets(){
 console.log('starting server');
 
 var currentTweet = '';
-var allTweets = [];
 
-setInterval(getTweets, 10000);
+setInterval(getTweets, 600000);
+
+});
+
 
