@@ -1,13 +1,15 @@
 var T = require('twit');
 var _ = require('underscore');
 var mongodb = require('mongodb');
-var uri = 'mongodb://heroku_app33504368:oa3i5pb84k3sgc94c4o2h5e82e@ds051640.mongolab.com:51640/heroku_app33504368';
+var uri = MONGOLAB_URI;
+
+
 
 var myClient = new T({
-  consumer_key:'hAOjwjemkcUDmBBbBNJVTxAzP',
-  consumer_secret: 'PhjIM9p0uVx6e8HcZVFNo9tiwm707Xuy1rUsyjHk2HT4bo740u',
-  access_token:'2661077726-WRWT9engJnIYhaU7VUUo6adjiwQI4ENvPBYxuEa',
-  access_token_secret:'2PXUqcqTTBzXu1RzMoJkWd2T9vuE9IIj64CP6ABB5aoe2'
+  consumer_key: CONSUMER_KEY,
+  consumer_secret: CONSUMER_SECRET,
+  access_token:ACCESS_TOKEN,
+  access_token_secret:ACCESS_TOKEN_SECRET
 });
 
 function transformTweet(tweet){
@@ -45,7 +47,9 @@ function getTweets(){
           postTweet(newTweet.text, currentTweet);
           currentTweet = newTweet.text;
           tweets.insert(newTweet, function(err, result){
-            if (err){throw err} else{
+            if (err){
+              throw err;
+            } else{
               console.log('new tweet added to db');
             }
           });
