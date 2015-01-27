@@ -1,15 +1,15 @@
 var T = require('twit');
 var _ = require('underscore');
 var mongodb = require('mongodb');
-var uri = MONGOLAB_URI;
+var uri = process.env.MONGOLAB_URI;
 
 
 
 var myClient = new T({
-  consumer_key: CONSUMER_KEY,
-  consumer_secret: CONSUMER_SECRET,
-  access_token: ACCESS_TOKEN,
-  access_token_secret: ACCESS_TOKEN_SECRET
+  consumer_key: process.env.CONSUMER_KEY,
+  consumer_secret: process.env.CONSUMER_SECRET,
+  access_token: process.env.ACCESS_TOKEN,
+  access_token_secret: process.env.ACCESS_TOKEN_SECRET
 });
 
 function transformTweet(tweet){
