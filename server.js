@@ -74,7 +74,7 @@ console.log('starting server');
 
 var currentTweet = '';
 
-setInterval(getTweets, 6000);
+setInterval(getTweets, 21600000);
 
 });
 
