@@ -54,7 +54,7 @@ function getTweets(){
           text: transformTweet(tweet.text),
           created_at: tweet.created_at
         };
-        if (newTweet.text !== currentTweet && !newTweet.indexOf('@')){
+        if (newTweet.text !== currentTweet && !newTweet.text.indexOf('@')){
           postTweet(newTweet.text, currentTweet);
           currentTweet = newTweet.text;
           tweets.insert(newTweet, function(err, result){
