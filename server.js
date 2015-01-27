@@ -47,7 +47,6 @@ var db = mongodb.MongoClient.connect(uri, function(err, db) {
 
 function getTweets(){
   myClient.get('statuses/user_timeline', { screen_name: 'cesarmillan', count: 1}, function (err, data, response) {
-    console.log('fetched new tweet');
     _.each(data, function(tweet){
       if (tweet.text.indexOf('dog') > -1){
         var newTweet = {
@@ -55,6 +54,7 @@ function getTweets(){
           created_at: tweet.created_at
         };
         if (newTweet.text !== currentTweet && !newTweet.text.indexOf('@')){
+          console.log('new Tweet:' + newTweet.text);
           postTweet(newTweet.text, currentTweet);
           currentTweet = newTweet.text;
           tweets.insert(newTweet, function(err, result){
