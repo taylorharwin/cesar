@@ -2,6 +2,17 @@ var T = require('twit');
 var _ = require('underscore');
 var mongodb = require('mongodb');
 var uri = process.env.MONGOLAB_URI;
+var http = require('http'); 
+var url = require('url'); 
+
+
+http.createServer(function (req, res) { 
+ console.log("Request: " + req.method + " to " + req.url); 
+ res.writeHead(200, "OK"); 
+ res.write("<h1>Server</h1>Server is running"); 
+ res.end(); 
+}).listen(process.env.PORT); 
+console.log("server ready");
 
 
 
