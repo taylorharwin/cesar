@@ -47,7 +47,7 @@ var db = mongodb.MongoClient.connect(uri, function(err, db) {
 
 function getTweets(){
   myClient.get('statuses/user_timeline', { screen_name: 'cesarmillan', count: 1}, function (err, data, response) {
-
+    console.log('fetched new tweet');
     _.each(data, function(tweet){
       if (tweet.text.indexOf('dog') > -1){
         var newTweet = {
@@ -74,7 +74,7 @@ console.log('starting server');
 
 var currentTweet = '';
 
-setInterval(getTweets, 600000);
+setInterval(getTweets, 6000);
 
 });
 
