@@ -63,7 +63,7 @@ console.log('starting server');
 
 var currentTweet = '';
 
-setInterval(getTweets, 600000);
+setInterval(getTweets, 60000);
 
 });
 
