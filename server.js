@@ -8,8 +8,8 @@ var uri = MONGOLAB_URI;
 var myClient = new T({
   consumer_key: CONSUMER_KEY,
   consumer_secret: CONSUMER_SECRET,
-  access_token:ACCESS_TOKEN,
-  access_token_secret:ACCESS_TOKEN_SECRET
+  access_token: ACCESS_TOKEN,
+  access_token_secret: ACCESS_TOKEN_SECRET
 });
 
 function transformTweet(tweet){
@@ -35,7 +35,7 @@ var db = mongodb.MongoClient.connect(uri, function(err, db) {
   }
 
 function getTweets(){
-  myClient.get('statuses/user_timeline', { screen_name: 'cesarmillan', count: 5}, function (err, data, response) {
+  myClient.get('statuses/user_timeline', { screen_name: 'cesarmillan', count: 1}, function (err, data, response) {
 
     _.each(data, function(tweet){
       if (tweet.text.indexOf('dog') > -1){
@@ -43,7 +43,7 @@ function getTweets(){
           text: transformTweet(tweet.text),
           created_at: tweet.created_at
         };
-        if (newTweet.text !== currentTweet){
+        if (newTweet.text !== currentTweet && !newTweet.indexOf('@')){
           postTweet(newTweet.text, currentTweet);
           currentTweet = newTweet.text;
           tweets.insert(newTweet, function(err, result){
@@ -63,7 +63,7 @@ console.log('starting server');
 
 var currentTweet = '';
 
-setInterval(getTweets, 60000);
+setInterval(getTweets, 600000);
 
 });
 
